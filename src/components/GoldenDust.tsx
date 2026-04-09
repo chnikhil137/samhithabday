@@ -1,22 +1,28 @@
 "use client";
 
-import { useCallback } from "react";
+import { useEffect, useState } from "react";
 import Particles from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import type { Engine } from "@tsparticles/engine";
+import { initParticlesEngine } from "@tsparticles/react";
 
 /**
  * GoldenDust — Touch-reactive golden particle field.
+ * Uses initParticlesEngine (v3 API) for proper initialization.
  */
 export default function GoldenDust() {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setReady(true));
   }, []);
+
+  if (!ready) return null;
 
   return (
     <Particles
       id="golden-dust"
-      init={particlesInit}
       className="fixed inset-0 pointer-events-none"
       style={{ zIndex: 2 }}
       options={{
@@ -82,8 +88,6 @@ export default function GoldenDust() {
             repulse: {
               distance: 80,
               speed: 0.5,
-              factor: 1,
-              maxSpeed: 2,
             },
             push: {
               quantity: 4,
