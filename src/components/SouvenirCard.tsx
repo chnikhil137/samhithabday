@@ -29,7 +29,7 @@ export default function SouvenirCard({ userName, photoSrc }: SouvenirCardProps) 
       const blob = await generateSouvenir(userName, photoSrc);
       downloadBlob(blob, `samhithas-birthday-${userName.toLowerCase().replace(/\s+/g, "-")}.png`);
     } catch (err) {
-      console.error("Download failed:", err);
+      // Slient failure as per 'no logs' requirement
     } finally {
       setDownloading(false);
     }

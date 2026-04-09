@@ -319,7 +319,32 @@ export async function generateSouvenir(
 /**
  * Trigger a browser file download from a Blob.
  */
-export function downloadBlob(blob: Blob, filename: string) {
+/**
+ * Trigger a browser file download from a Blob.
+ * Integrated with Web Share API for mobile "Save to Gallery" experience.
+ */
+export async function downloadBlob(blob: Blob, filename: string) {
+  // Try Web Share API first (Ideal for mobile)
+  if (
+    typeof navigator !== "undefined" &&
+    navigator.share &&
+    navigator.canShare &&
+    navigator.canShare({ files: [new File([blob], filename, { type: "image/png" })] })
+  ) {
+    try {
+      const file = new File([blob], filename, { type: "image/png" });
+      await navigator.share({
+        files: [file],
+        title: "Samhitha's Birthday Souvenir",
+        text: "Check out my personalized souvenir from Samhitha's Birthday!",
+      });
+      return; 
+    } catch (err) {
+      // If sharing was cancelled or failed, fall through to anchor download
+    }
+  }
+
+  // Fallback to standard Anchor download (Best for Desktop)
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
