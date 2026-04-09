@@ -306,12 +306,12 @@ export async function generateSouvenir(
   applyVignette(ctx, w, h);
   applyGrain(ctx, w, h, 12);
 
-  // Export as PNG blob
+  // Export as high-quality but compressed JPEG blob to avoid massive file sizes
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => (blob ? resolve(blob) : reject(new Error("Canvas toBlob failed"))),
-      "image/png",
-      1.0
+      "image/jpeg",
+      0.90 // 90% quality gives us near lossless print quality but drops file size from 20MB+ down to 1-2MB
     );
   });
 }
@@ -329,10 +329,10 @@ export async function downloadBlob(blob: Blob, filename: string) {
     typeof navigator !== "undefined" &&
     navigator.share &&
     navigator.canShare &&
-    navigator.canShare({ files: [new File([blob], filename, { type: "image/png" })] })
+    navigator.canShare({ files: [new File([blob], filename, { type: "image/jpeg" })] })
   ) {
     try {
-      const file = new File([blob], filename, { type: "image/png" });
+      const file = new File([blob], filename, { type: "image/jpeg" });
       await navigator.share({
         files: [file],
         title: "Samhitha's Birthday Souvenir",

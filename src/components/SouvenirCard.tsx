@@ -27,7 +27,7 @@ export default function SouvenirCard({ userName, photoSrc }: SouvenirCardProps) 
     triggerHaptic([50, 30, 80, 30, 50]);
     try {
       const blob = await generateSouvenir(userName, photoSrc);
-      downloadBlob(blob, `samhithas-birthday-${userName.toLowerCase().replace(/\s+/g, "-")}.png`);
+      downloadBlob(blob, `samhithas-birthday-${userName.toLowerCase().replace(/\s+/g, "-")}.jpeg`);
     } catch (err) {
       // Slient failure as per 'no logs' requirement
     } finally {
