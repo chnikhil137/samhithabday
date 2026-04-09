@@ -1,26 +1,288 @@
 @import "tailwindcss";
 
+/* ========================================================================
+   THE CELESTIAL SOUVENIR ENGINE — Global Design System
+   ======================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core Palette — Deep Space + Rose Gold + Celestial Purple */
+  --color-void: #0a0a12;
+  --color-nebula-deep: #100e1f;
+  --color-nebula-mid: #1a1530;
+  --color-nebula-glow: #2d1f5e;
+  --color-aurora-purple: #6c3fb5;
+  --color-aurora-violet: #9b59e0;
+  --color-aurora-pink: #e056a0;
+  --color-rose-gold: #e8a87c;
+  --color-rose-gold-light: #f5cba7;
+  --color-golden-dust: #f0d48a;
+  --color-celestial-white: #f0eef6;
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-glass-bg: rgba(16, 14, 31, 0.55);
+  --color-glass-bg-strong: rgba(16, 14, 31, 0.75);
+
+  /* Typography */
+  --font-header: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-ui: var(--font-inter), "Inter", system-ui, sans-serif;
+
+  /* Glow Effects */
+  --glow-purple: 0 0 30px rgba(108, 63, 181, 0.4), 0 0 60px rgba(108, 63, 181, 0.15);
+  --glow-rose: 0 0 30px rgba(232, 168, 124, 0.35), 0 0 60px rgba(232, 168, 124, 0.12);
+  --glow-golden: 0 0 25px rgba(240, 212, 138, 0.4), 0 0 50px rgba(240, 212, 138, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-void);
+  color: var(--color-celestial-white);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* ========================================================================
+   GLASSMORPHISM 2.0 — Deep Blur Components
+   ======================================================================== */
+
+.glass-panel {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(36px) saturate(1.5);
+  -webkit-backdrop-filter: blur(36px) saturate(1.5);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    var(--glow-purple);
+}
+
+.glass-panel-strong {
+  background: var(--color-glass-bg-strong);
+  backdrop-filter: blur(48px) saturate(1.8);
+  -webkit-backdrop-filter: blur(48px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    var(--glow-purple);
+}
+
+/* ========================================================================
+   CELESTIAL INPUT — Glowing Name Field
+   ======================================================================== */
+
+.celestial-input {
+  background: rgba(16, 14, 31, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(108, 63, 181, 0.3);
+  border-radius: 16px;
+  padding: 18px 24px;
+  font-family: var(--font-header);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-celestial-white);
+  text-align: center;
+  letter-spacing: 0.08em;
+  outline: none;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow:
+    inset 0 0 0 rgba(108, 63, 181, 0),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.celestial-input::placeholder {
+  color: rgba(155, 89, 224, 0.4);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.celestial-input:focus {
+  border-color: rgba(155, 89, 224, 0.6);
+  box-shadow:
+    inset 0 0 20px rgba(108, 63, 181, 0.08),
+    0 0 30px rgba(108, 63, 181, 0.3),
+    0 0 60px rgba(108, 63, 181, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================================================
+   CELESTIAL BUTTON — Luminous CTA
+   ======================================================================== */
+
+.celestial-btn {
+  position: relative;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-aurora-purple) 0%, var(--color-aurora-pink) 50%, var(--color-rose-gold) 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+  box-shadow:
+    0 4px 24px rgba(108, 63, 181, 0.4),
+    0 0 40px rgba(224, 86, 160, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.celestial-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.celestial-btn:hover::before {
+  left: 100%;
+}
+
+.celestial-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 40px rgba(108, 63, 181, 0.5),
+    0 0 60px rgba(224, 86, 160, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.celestial-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.celestial-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================================================
+   POLAROID CARDS — Floating Gallery
+   ======================================================================== */
+
+.polaroid {
+  background: linear-gradient(145deg, #fefefe 0%, #f0ecf0 100%);
+  padding: 10px 10px 36px 10px;
+  border-radius: 4px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(108, 63, 181, 0.15);
+  transform-style: preserve-3d;
+}
+
+.polaroid img {
+  width: 100%;
+  border-radius: 2px;
+  display: block;
+}
+
+/* ========================================================================
+   ANIMATIONS
+   ======================================================================== */
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+  50% { transform: translateY(-20px) rotate(var(--rotate, 0deg)); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: var(--glow-purple); }
+  50% { box-shadow: 0 0 50px rgba(108, 63, 181, 0.6), 0 0 100px rgba(108, 63, 181, 0.25); }
+}
+
+@keyframes driftFloat {
+  0% { transform: translate(0, 0) rotate(var(--rotate-start, -5deg)) scale(1); }
+  25% { transform: translate(var(--drift-x, 15px), var(--drift-y, -20px)) rotate(var(--rotate-mid, 3deg)) scale(1.02); }
+  50% { transform: translate(var(--drift-x2, -10px), var(--drift-y2, -35px)) rotate(var(--rotate-end, -2deg)) scale(1); }
+  75% { transform: translate(var(--drift-x3, 8px), var(--drift-y3, -15px)) rotate(var(--rotate-mid, 3deg)) scale(0.99); }
+  100% { transform: translate(0, 0) rotate(var(--rotate-start, -5deg)) scale(1); }
+}
+
+@keyframes supernovaExpand {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+
+@keyframes grainFlicker {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.07; }
+}
+
+/* Scroll-lock when keyboard opens on mobile */
+.keyboard-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* High-DPI text rendering */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .celestial-input {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .celestial-input {
+    font-size: 1.25rem;
+    padding: 16px 20px;
+  }
+
+  .celestial-btn {
+    padding: 16px 36px;
+    font-size: 0.8rem;
+  }
 }
